@@ -60,9 +60,16 @@ update: (output, domEl) ->
   return unless today?
   date  = @getDate today.time
   $(domEl).find('.temp').prop 'textContent', Math.round((today.temperatureMax-30)/2)+" degrees right now" #'°'
-  $(domEl).find('.summary').text today.summary
+  $(domEl).find('.summary').text @shorten today.summary
 
 getDate: (utcTime) ->
   date  = new Date(0)
   date.setUTCSeconds(utcTime)
   date
+
+shorten: (s) ->
+  if (s.length > 40)
+    s = s.substr(0,39)
+    s + '...'
+  else
+    s
